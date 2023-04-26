@@ -1,24 +1,76 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Personality Test</title>
-	<script src="script.js"></script>
-</head>
-<body>
-	<h1>Personality Test</h1>
-	<div id="questions">
-		<h2>Question 1</h2>
-		<p>How do you prefer to spend your free time?</p>
-		<input type="radio" name="q1" value="a">Reading<br>
-		<input type="radio" name="q1" value="b">Watching TV<br>
-		<input type="radio" name="q1" value="c">Playing sports<br>
-	</div>
-	<button onclick="submitAnswer()">Submit</button>
-	<button onclick="nextQuestion()">Next</button>
-	<div id="results">
-		<h2>Results</h2>
-		<p>Your personality type is: <span id="type"></span></p>
-		<p>Description: <span id="description"></span></p>
-	</div>
-</body>
-</html>
+import React, { useState } from 'react';
+import './style.css';
+
+function MBTIQuiz() {
+  const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [answers, setAnswers] = useState([]);
+
+  // Define an array of question objects, each with a question and answer choices
+  const questions = [
+    {
+      question: "あなたはどちらが好きですか？",
+      choices: [
+        { text: "山", value: 1 },
+        { text: "海", value: 2 },
+        { text: "街", value: 3 },
+        { text: "自然公園", value: 4 },
+        { text: "私はどちらでもない", value: 5 }
+      ]
+    },
+    {
+      question: "あなたの仕事はどのくらいクリエイティブですか？",
+      choices: [
+        { text: "完全にクリエイティブ", value: 1 },
+        { text: "ややクリエイティブ", value: 2 },
+        { text: "あまりクリエイティブではない", value: 3 },
+        { text: "全くクリエイティブではない", value: 4 },
+        { text: "私は仕事をしていない", value: 5 }
+      ]
+    },
+    // Add more questions here
+  ];
+
+  const handleAnswer = (value) => {
+    // Add the selected answer to the answers array
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion - 1] = value;
+    setAnswers(newAnswers);
+
+    // Go to the next question or finish the quiz if it's the last question
+    if (currentQuestion < questions.length) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      // TODO: handle quiz completion
+    }
+  };
+
+  return (
+    <div className="quiz-container">
+      <header>
+        <h1>MBTIパーソナリティテスト</h1>
+        <nav>
+          <ul>
+            <li><a href="#">テストを受ける</a></li>
+            <li><a href="#">テストについて</a></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <h2>質問 {currentQuestion}</h2>
+        <p>{questions[currentQuestion - 1].question}</p>
+        <ul className="answer-choices">
+          {questions[currentQuestion - 1].choices.map(choice => (
+            <li key={choice.value}>
+              <button onClick={() => handleAnswer(choice.value)}>
+                {choice.text}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <button onClick={() => setCurrentQuestion(currentQuestion + 1)}>次へ</button>
+      </main>
+    </div>
+  );
+}
+
+export default MBTIQuiz;
