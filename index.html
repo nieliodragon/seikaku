@@ -1,25 +1,11 @@
 import React, { useState } from 'react';
 import './style.css';
 
-<head>
-  <link rel="stylesheet" href="./style.css" />
-</head>
-
-
 function MBTIQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answers, setAnswers] = useState([]);
 
-  const questions = [
-    {
-      question: "あなたはどちらが好きですか？",
-      choices: [
-        { text: "山", value: 1 },
-        { text: "海", value: 2 },
-        { text: "街", value: 3 },
-        { text: "自然公園", value: 4 },
-        { text: "私はどちらでもない", value: 5 }
-      ]
+  const questions = [    {      question: "あなたはどちらが好きですか？",      choices: [        { text: "山", value: 1 },        { text: "海", value: 2 },        { text: "街", value: 3 },        { text: "自然公園", value: 4 },        { text: "私はどちらでもない", value: 5 }      ]
     },
     {
       question: "あなたの仕事はどのくらいクリエイティブですか？",
@@ -62,11 +48,7 @@ function MBTIQuiz() {
             <button className="answer-button" onClick={() => handleAnswer(choice.value)}>{choice.text}</button>
           ))}
         </div>
-        <button className="next-button" onClick={() => setCurrentQuestion(currentQuestion + 1)}>次へ</button>
-      </div>
-    </div>
-  );
-}
-
-export default MBTIQuiz;
-
+        {currentQuestion < questions.length ? (
+          <button className="next-button">次へ</button>
+        ) : (
+          <button className="next-button">テストを
