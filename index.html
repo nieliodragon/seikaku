@@ -5,7 +5,6 @@ function MBTIQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answers, setAnswers] = useState([]);
 
-  // Define an array of question objects, each with a question and answer choices
   const questions = [
     {
       question: "あなたはどちらが好きですか？",
@@ -31,12 +30,10 @@ function MBTIQuiz() {
   ];
 
   const handleAnswer = (value) => {
-    // Add the selected answer to the answers array
     const newAnswers = [...answers];
     newAnswers[currentQuestion - 1] = value;
     setAnswers(newAnswers);
 
-    // Go to the next question or finish the quiz if it's the last question
     if (currentQuestion < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
@@ -46,31 +43,25 @@ function MBTIQuiz() {
 
   return (
     <div className="quiz-container">
-      <header>
-        <h1>MBTIパーソナリティテスト</h1>
-        <nav>
-          <ul>
-            <li><a href="#">テストを受ける</a></li>
-            <li><a href="#">テストについて</a></li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <h2>質問 {currentQuestion}</h2>
-        <p>{questions[currentQuestion - 1].question}</p>
-        <ul className="answer-choices">
+      <h1 className="title">MBTIパーソナリティテスト</h1>
+      <button className="start-button">テストを受ける</button>
+      <div className="about-section">
+        <h2>テストについて</h2>
+        <p>これはMBTIパーソナリティテストです。</p>
+      </div>
+      <div className="question-section">
+        <h2 className="question-number">質問 {currentQuestion}</h2>
+        <h3 className="question-text">{questions[currentQuestion - 1].question}</h3>
+        <div className="answer-buttons">
           {questions[currentQuestion - 1].choices.map(choice => (
-            <li key={choice.value}>
-              <button onClick={() => handleAnswer(choice.value)}>
-                {choice.text}
-              </button>
-            </li>
+            <button className="answer-button" onClick={() => handleAnswer(choice.value)}>{choice.text}</button>
           ))}
-        </ul>
-        <button onClick={() => setCurrentQuestion(currentQuestion + 1)}>次へ</button>
-      </main>
+        </div>
+        <button className="next-button" onClick={() => setCurrentQuestion(currentQuestion + 1)}>次へ</button>
+      </div>
     </div>
   );
 }
 
 export default MBTIQuiz;
+
